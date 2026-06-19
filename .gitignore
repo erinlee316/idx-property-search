@@ -1,0 +1,25 @@
+# api keys & local variables
+.env
+.env.example
+*.env
+
+# ceo rule: no raw data or dumps in repo
+*.csv
+*.xlsx
+*.xls
+*.sql
+*.json
+!package.json
+!baseline.json
+
+# python builds / venv
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# mac / editor artifacts
+.DS_Store
+.vscode/
+.idea/
