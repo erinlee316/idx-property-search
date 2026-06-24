@@ -2,6 +2,11 @@
 %% User → WhatsApp → OpenClaw Runtime → Skill Selector → Tool Execution → Memory Update → Response → User
 
 flowchart TD
+    U[User]
+    ST[shortTerm: session state]
+    LT[longTerm: vector store]
+    TE[Tools: typed async functions]
+    R[Response]
     subgraph Channels
         WA[WhatsApp]
         EM[email]
@@ -12,7 +17,7 @@ flowchart TD
         S[sessions]
     end
     subgraph Skills
-        PS[propretySearch]
+        PS[propertySearch]
         MS[marketStats]
         RAG[RAG]
     end
@@ -21,13 +26,13 @@ flowchart TD
         CS[california_sold]
     end
 
-    U[User] --> WA & EM & WEB
+    U --> WA & EM & WEB
     Channels --> S --> O --> PS & MS & RAG
-    S --> ST[shortTerm: session state]
-    LT[longTerm: vector store] --> RAG
-    Skills --> TE[Tools: types asynch functions] --> ST
+    S --> ST
+    LT --> RAG
+    Skills --> TE --> ST
     PS --> RP
     MS --> CS
-    ST --> R[Response] --> U[User]
+    ST --> R --> U
 
 ```
