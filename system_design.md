@@ -1,9 +1,14 @@
 ```mermaid
 flowchart TD
-    U_input[User]
-    U_output[User]
-    WA[WhatsApp]
+    U[User]
     R[Response]
+
+    subgraph Channels
+        WA[WhatsApp]
+        EM[email]
+        WEB[web]
+    end
+
 
     subgraph OR[OpenClaw Runtime]
         O[orchestrator]
@@ -11,7 +16,7 @@ flowchart TD
     end
 
 
-    subgraph SS[Skill Selector]
+    subgraph Skills
         PS[propretySearch]
         MS[marketStats]
         RAG[RAG]
@@ -27,13 +32,13 @@ flowchart TD
     end
 
 
-    U_input --> WA
-    WA --> OR
-    OR --> SS
-    SS --> TE
-    TE --> MU
+    U --> WA & EM & WEB
+    Channels --> O & S
+    OR --> PS & MS & RAG
+    Skills --> TAF
+    TE --> ST & LT
     MU --> R
-    R --> U_output
+    R --> U
 
 
 
