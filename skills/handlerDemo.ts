@@ -2,6 +2,14 @@ export async function getCurrentTime() {
   return { currentTime: new Date().toISOString() };
 }
 
+export async function propertySearch() {
+  return { note: "filler — property search, implemented later" };
+}
+
+export async function marketStats() {
+  return { note: "filler — market stats, implemented later" };
+}
+
 export async function handleMessage(message: string) {
   if (message.toLowerCase().includes("time")) {
     return await getCurrentTime();
@@ -15,13 +23,15 @@ export async function handleMessage(message: string) {
 
   if (message.toLowerCase().includes("listing")) {
     return {
-      response: "Let me pull up listings in that area.",
+      response: "Let me pull up the active listings in that area for you.",
+      skill: "propertySearch",
     };
   }
 
   if (message.toLowerCase().includes("market")) {
     return {
-      response: "Let me look up market trends for that area.",
+      response: "Let me look up the latest market trends for that area.",
+      skill: "marketStats",
     };
   }
 
