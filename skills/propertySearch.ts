@@ -20,7 +20,12 @@ function replaceAsLiteral(s: string): string {
 }
 
 function findCity(query: string): string | undefined {
-  return cities.find((c) => new RegExp(`\\b${replaceAsLiteral(c)}\\b`, "i").test(query));
+  return cities.find((c) => {
+    const literalCity = replaceAsLiteral(c);
+    const checkA = new RegExp(`\\b(?:in|around|near|within)\\s+${literalCity}\\b`, "i").test(query);
+    const checkB = new RegExp(`\\b${literalCity}\\b`).test(query);
+    return checkA || checkB;
+  });
 }
 
 // turn free-text query into structured filter object
@@ -34,7 +39,9 @@ export function parsePropertyQuery(query: string): PropertyFilter {
   const bathMatch = query.match(/\b(\d+(?:\.\d+)?)[\s-]*(?:bath|baths|bathroom|bathrooms)/i);
   const sqftMatch = query.match(/\b(\d[\d,]*)[\s-]*(?:sqft|sq\s+ft|square\s+feet|sq\.\s+ft\.|sf)/i);
   const poolMatch = query.match(/\b(?:swimming\s+)?pools?\b/i);
+  const poolNegated = /\b(?:no|without|not)\s+(?:a\s+|an\s+)?(?:swimming\s+)?pools?\b/i.test(query);
   const viewMatch = query.match(/\bviews?\b/i);
+  const viewNegated = /\b(?:no|without|not)\s+(?:a\s+|an\s+)?views?\b/i.test(query);
   const hoaBefore = query.match(/(?:under|below|max|up\s+to|no\s+more\s+than)\s*\$?(\d[\d,]*)\s*(?:\/\s*mo(?:nth)?)?\s*(?:hoa|association\s+(?:fees?|dues?)|hoa\s+fees?)/i);
   const hoaAfter = query.match(/(?:hoa|association(?:\s+fees?|\s+dues?)?)\s*(?:fees?|dues?)?\s*(?:under|below|max|up\s+to|no\s+more\s+than|≤)\s*\$?(\d[\d,]*)/i);
   const hoaMatch = hoaBefore ?? hoaAfter;
@@ -64,8 +71,8 @@ export function parsePropertyQuery(query: string): PropertyFilter {
   if (bedMatch) filter.minBed = Number(bedMatch[1]);
   if (bathMatch) filter.minBath = Number(bathMatch[1]);
   if (sqftMatch) filter.minSqft = Number(sqftMatch[1].replace(/,/g, ""));
-  if (poolMatch) filter.pool = "1";
-  if (viewMatch) filter.view = "1";
+  if (poolMatch && !poolNegated) filter.pool = "1";
+  if (viewMatch && !viewNegated) filter.view = "1";
   if (hoaMatch) filter.maxHoa = Number(hoaMatch[1].replace(/,/g, ""));
   if (propertyMatch) filter.property = propertyMap[propertyMatch];
 
