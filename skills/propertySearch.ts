@@ -8,8 +8,8 @@ export interface PropertyFilter {
   minBath?: number;
   minSqft?: number;
   property?: string;
-  pool?: number;
-  view?: number;
+  pool?: string;
+  view?: string;
   maxHoa?: number;
 }
 
@@ -84,11 +84,11 @@ export function parsePropertyQuery(query: string): PropertyFilter {
   }
 
   if (poolMatch) {
-    filter.pool = 1;
+    filter.pool = "1";
   }
 
   if (viewMatch) {
-    filter.view = 1;
+    filter.view = "1";
   }
 
   if (hoaMatch) {
