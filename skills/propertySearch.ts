@@ -20,7 +20,7 @@ export function parsePropertyQuery(query: string): PropertyFilter {
   // define patterns to be used for extracting info
   const cityMatch = query.match(/\bin\s+([a-z][a-z\s]*?)(?=\s+(?:under|with|over|and|\$|\d)\b|[,.?!]|$)/i);
   const priceMatch = query.match(/(?:under|below|less than|no more than|max|up to|within|≤|cheaper than)\s*\$?([\d,.]+)(k|m)?/i);
-  const bedMatch = 
+  const bedMatch = query.match(/\b(\d+)[\s-]*(?:room|rooms|bed|beds|bedroom|bedrooms)/i)
   const bathMatch = 
   const sqftMatch = 
   const propertyMatch = 
@@ -43,12 +43,17 @@ export function parsePropertyQuery(query: string): PropertyFilter {
     filter.maxPrice = maxPrice;
   }
 
+  if (bedMatch) {
+    filter.minBed = Number(bedMatch[1]);
+  }
+
+
+
+
   return filter;
 }
 
 // quick test
 console.log(parsePropertyQuery("Show me 3-bedroom condos in Irvine under $1.5M with a pool."));
-
-
 
 
