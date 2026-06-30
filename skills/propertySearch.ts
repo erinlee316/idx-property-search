@@ -19,10 +19,10 @@ export function parsePropertyQuery(query: string): PropertyFilter {
   
   // define patterns to be used for extracting info
   const cityMatch = query.match(/\bin\s+([a-z][a-z\s]*?)(?=\s+(?:under|with|over|and|\$|\d)\b|[,.?!]|$)/i);
-  const priceMatch = query.match(/(?:under|below|less than|no more than|max|up to|within|≤|cheaper than)\s*\$?([\d,.]+)(k|m)?/i);
+  const priceMatch = query.match(/(?:under|below|less\s+than|no\s+more\s+than|max|up\s+to|within|≤|cheaper\s+than)\s*\$?([\d,.]+)(k|m)?/i);
   const bedMatch = query.match(/\b(\d+)[\s-]*(?:room|rooms|bed|beds|bedroom|bedrooms)/i)
   const bathMatch = query.match(/\b(\d+(?:\.\d+)?)[\s-]*(?:bath|baths|bathroom|bathrooms)/i)
-  const sqftMatch = 
+  const sqftMatch = query.match(/\b(\d[\d,]*)\s+(?:sqft|sq\s+ft|square\s+feet|sq\.\s+ft\.|sf)/i);
   const propertyMatch = 
   const poolMatch = 
   const viewMatch = 
@@ -51,6 +51,9 @@ export function parsePropertyQuery(query: string): PropertyFilter {
     filter.minBath = Number(bathMatch[1]);
   }
 
+  if (sqftMatch) {
+    filter.minSqft = Number(sqftMatch[1].replace(/,/g, ""));
+  }
 
   return filter;
 }
