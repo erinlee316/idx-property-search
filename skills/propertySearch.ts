@@ -22,7 +22,7 @@ export function parsePropertyQuery(query: string): PropertyFilter {
   const priceMatch = query.match(/(?:under|below|less\s+than|no\s+more\s+than|max|up\s+to|within|≤|cheaper\s+than)\s*\$?([\d,.]+)(k|m)?/i);
   const bedMatch = query.match(/\b(\d+)[\s-]*(?:room|rooms|bed|beds|bedroom|bedrooms)/i)
   const bathMatch = query.match(/\b(\d+(?:\.\d+)?)[\s-]*(?:bath|baths|bathroom|bathrooms)/i)
-  const sqftMatch = query.match(/\b(\d[\d,]*)\s+(?:sqft|sq\s+ft|square\s+feet|sq\.\s+ft\.|sf)/i);
+  const sqftMatch = query.match(/\b(\d[\d,]*)[\s-]*(?:sqft|sq\s+ft|square\s+feet|sq\.\s+ft\.|sf)/i);
   const propertyMatch = 
   const poolMatch = 
   const viewMatch = 
