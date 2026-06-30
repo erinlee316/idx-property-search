@@ -23,13 +23,16 @@ export function parsePropertyQuery(query: string): PropertyFilter {
   const bedMatch = query.match(/\b(\d+)[\s-]*(?:room|rooms|bed|beds|bedroom|bedrooms)/i)
   const bathMatch = query.match(/\b(\d+(?:\.\d+)?)[\s-]*(?:bath|baths|bathroom|bathrooms)/i)
   const sqftMatch = query.match(/\b(\d[\d,]*)[\s-]*(?:sqft|sq\s+ft|square\s+feet|sq\.\s+ft\.|sf)/i);
-  const propertyMatch = 
-  const poolMatch = 
+  const poolMatch = query.match(/\b(?:swimming\s+)?pools?\b/i);
   const viewMatch = 
   const hoaMatch = 
+
+  
+
+  const propertyMatch = // needs different structure than the rest, do this later...
   
   
-  
+
   // use patterns from above and find all matches with query
   if (cityMatch) {
    filter.city = cityMatch[1].trim();
@@ -55,6 +58,9 @@ export function parsePropertyQuery(query: string): PropertyFilter {
     filter.minSqft = Number(sqftMatch[1].replace(/,/g, ""));
   }
 
+  if (poolMatch) {
+    filter.pool = 1;
+  }
   return filter;
 }
 
