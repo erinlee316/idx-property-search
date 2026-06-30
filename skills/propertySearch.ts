@@ -35,8 +35,8 @@ export function parsePropertyQuery(query: string): PropertyFilter {
   const sqftMatch = query.match(/\b(\d[\d,]*)[\s-]*(?:sqft|sq\s+ft|square\s+feet|sq\.\s+ft\.|sf)/i);
   const poolMatch = query.match(/\b(?:swimming\s+)?pools?\b/i);
   const viewMatch = query.match(/\bviews?\b/i);
-  const hoaBefore = query.match(/\b\$?(\d[\d,]*)\D{0,15}(?:hoa|dues?|fees?|association\s+fees?)/i);
-  const hoaAfter = query.match(/\b(?:hoa|dues?|fees?|association\s+fees?)\D{0,15}\$?(\d[\d,]*)/i);
+  const hoaBefore = query.match(/(?:under|below|max|up\s+to|no\s+more\s+than)\s*\$?(\d[\d,]*)\s*(?:\/\s*mo(?:nth)?)?\s*(?:hoa|association\s+(?:fees?|dues?)|hoa\s+fees?)/i);
+  const hoaAfter = query.match(/(?:hoa|association(?:\s+fees?|\s+dues?)?)\s*(?:fees?|dues?)?\s*(?:under|below|max|up\s+to|no\s+more\s+than|≤)\s*\$?(\d[\d,]*)/i);
   const hoaMatch = hoaBefore ?? hoaAfter;
 
   const propertyMap: Record<string, string> = {
@@ -84,7 +84,7 @@ function main() {
 
     // multiple field
     "3 bed 2.5 bath single family in Pasadena under $1.2M with a pool",
-    "2 bedroom condo in Long Beach under $600k",
+    "2 bedroom townhouse in Long Beach under $600k",
     "condo in San Francisco under $1.2M with pool and view",
 
     // no match -> should return {}
@@ -94,7 +94,7 @@ function main() {
     // weak spots
     "homes in Walnut Creek below $500k",
     "warehouse loft in Santa Cruz",
-    "condo in Berkeley with HOA under $500",
+    "condo in Berkeley under 300k with HOA under $500",
     "condo without a pool",
     "$1,200,000 home in Irvine",
   ];
