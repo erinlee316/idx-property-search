@@ -1,7 +1,8 @@
 # api keys & local variables
 .env
 *.env
-!.env.example   # template (no secrets) — keep this one tracked
+# template (no secrets) — keep this one tracked
+!.env.example
 
 # ceo rule: no raw data or dumps in repo
 *.csv
@@ -10,7 +11,13 @@
 *.sql
 *.json
 !package.json
+!package-lock.json
 !baseline.json
+# city lookup table the property-search parser depends on
+!skills/cities.json
+
+# node / typescript deps
+node_modules/
 
 # python builds / venv
 __pycache__/
