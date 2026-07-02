@@ -39,11 +39,17 @@ export async function searchActiveListings(filter: PropertyFilter, page = 1, lim
     FROM rets_property
     WHERE L_Status = 'Active'
     `;
-  
+
   const params: any[] = []; // what to be matched on
-  const offset: (page - 1) * limit; // how many rows to skip before starting
+  const offset = (page - 1) * limit; // how many rows to skip before starting
 
+  if (filter.city) {sql + " city = ?"; params.push(filter.city)};
+  if (filter.maxPrice) {sql + " price = ?"; params.push(filter.maxPrice)};
+  if (filter.beds) {}
+  if (filter.baths)
+  if (filter.sqft)
+  if (filter.type)
+  if (filter.pool)
+  if (filter.hasView)
+  if (filter.maxHoa)
 }
-
-
-
