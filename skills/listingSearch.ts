@@ -39,4 +39,11 @@ export async function searchActiveListings(filter: PropertyFilter, page = 1, lim
     FROM rets_property
     WHERE L_Status = 'Active'
     `;
+  
+  const params: any[] = []; // what to be matched on
+  const offset: (page - 1) * limit; // how many rows to skip before starting
+
 }
+
+
+
